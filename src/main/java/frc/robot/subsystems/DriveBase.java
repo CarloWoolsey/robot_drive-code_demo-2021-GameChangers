@@ -14,7 +14,19 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
+
+
 public class DriveBase extends SubsystemBase {
+
+  public final WPI_TalonSRX leftFrontMotor = new WPI_TalonSRX(Constants.leftFrontMotorPort);
+  public final WPI_TalonSRX leftBackMotor = new WPI_TalonSRX(Constants.leftBackMotorPort);
+  public final WPI_TalonSRX rightFrontMotor = new WPI_TalonSRX(Constants.rightFrontMotorPort);
+  public final WPI_TalonSRX rightBackMotor = new WPI_TalonSRX(Constants.rightFrontMotorPort);
+
+  public final SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftFrontMotor, leftBackMotor);
+  public final SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightFrontMotor, rightBackMotor);
+
+  public final DifferentialDrive differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
 
 
 
@@ -25,6 +37,10 @@ public class DriveBase extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void arcadeDrive(double speed, double rotation){
+    differentialDrive.arcadeDrive(speed,rotation);
   }
 
 
